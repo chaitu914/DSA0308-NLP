@@ -1,0 +1,19 @@
+import nltk
+from nltk import CFG
+from nltk.parse import EarleyChartParser
+grammer=CFG.fromstring("""
+S -> NP VP
+NP -> Det N
+VP -> V NP
+Det -> 'THE'
+N -> 'DOG' | 'CAT'
+V -> 'CHASED'
+""")
+parser=EarleyChartParser(grammer)
+sentence = "THE DOG CHASED THE CAT".split()
+parsetree=list(parser.parse(sentence))
+if parsetree:
+  for tree in parsetree:
+    tree.pretty_print()
+  else:
+    print("Empty")
