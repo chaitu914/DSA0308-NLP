@@ -1,0 +1,21 @@
+import nltk
+from nltk import PCFG
+from nltk.parse import ViterbiParser
+
+grammer=PCFG.fromstring("""
+S -> NP VP [1.0]
+NP -> Det N [0.6]
+NP -> "students"[0.4]
+VP -> V NP [0.5]
+VP -> V [0.5]
+Det -> 'the' [1.0]
+N -> 'students' [1.0]
+V -> 'study'[1.0]
+""")
+parser = ViterbiParser(grammer)
+sentence="the students study"
+tokens =sentence.split()
+parse_tree=list(parser.parse(tokens))
+for tree in parse_tree:
+  tree.pretty_print()
+  print("probability :",tree.prob())
